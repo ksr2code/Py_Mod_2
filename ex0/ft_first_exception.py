@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 def check_temperature(temp_str: str):
     """Validate temperature input"""
     try:
@@ -8,7 +10,7 @@ def check_temperature(temp_str: str):
             print(f"Error: {temp}°C is too hot for plants (max 40°C)")
         else:
             return temp
-    except ValueError:
+    except Exception:
         print(f"Error: '{temp_str}' is not a valid number")
 
 
