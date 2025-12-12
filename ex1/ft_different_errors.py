@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 def garden_operations(operation_type: str):
     """Demonstrate different error types"""
     plant_dict = {"tomato": "healthy", "lettuce": "growing"}

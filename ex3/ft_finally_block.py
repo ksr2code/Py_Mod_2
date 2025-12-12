@@ -1,9 +1,4 @@
-class WaterError(Exception):
-    """Exception raised for water errors."""
-
-    def __init__(self, message: str):
-        super().__init__(message)
-
+#!/usr/bin/env python3
 
 def water_plants(plant_list):
     """Water plants with automatic cleanup"""
@@ -13,9 +8,9 @@ def water_plants(plant_list):
             if plant is not None:
                 print(f"Watering {plant}")
             else:
-                raise WaterError(f"Cannot water {plant} - invalid plant!")
-    except WaterError as err_message:
-        print(f"Error: {err_message}")
+                plant = 1 / 0
+    except Exception:
+        print("Error: Cannot water None - invalid plant!")
     finally:
         print("Closing watering system (cleanup)")
 

@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 def check_plant_health(plant_name, water_level, sunlight_hours):
     """Check if plant health parameters are valid"""
     try:
