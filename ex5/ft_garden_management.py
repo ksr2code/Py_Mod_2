@@ -41,7 +41,7 @@ class GardenManager:
 
     def __init__(self):
         """Initialize a garden."""
-        self.plants = []
+        self.plants = {}
         self.water_tank = 50
 
     def add_plant(self, plant: Plant):
@@ -49,7 +49,7 @@ class GardenManager:
         try:
             if plant.name == "" or plant.name is None:
                 raise PlantError("Plant name cannot be empty")
-            self.plants.append(plant)
+            self.plants[plant.name] = plant
             print(f"Added {plant.name} successfully")
         except PlantError as exc:
             print(f"Error adding plant: {exc}")
@@ -58,12 +58,12 @@ class GardenManager:
         """Waters all the plants in garden"""
         try:
             print("Opening watering system")
-            for plant in self.plants:
-                if plant.name is None:
-                    raise WaterError(f"Cannot water {plant} - invalid plant!")
+            for k in self.plants:
+                if k is None:
+                    raise WaterError(f"Cannot water {k} - invalid plant!")
                 self.water_tank -= 1
-                plant.water_level += 1
-                print(f"Watering {plant.name} - success")
+                self.plants[k].water_level += 1
+                print(f"Watering {k} - success")
         except WaterError as exc:
             print(f"Error watering plant: {exc}")
         finally:
@@ -71,30 +71,27 @@ class GardenManager:
 
     def check_plant_health(self):
         """Check if plant health parameters are valid"""
-        try:
-            for plant in self.plants:
-                if plant.name == "" or plant.name is None:
+        for k in self.plants:
+            pl = self.plants[k]
+            try:
+                if pl.name == "" or pl.name is None:
                     raise HealthError("Plant name cannot be empty!")
-                if plant.water_level > 10:
+                if pl.water_level > 10:
                     raise HealthError(
-                        f"{plant.name}: Water level "
-                        f"{plant.water_level} is too high (max 10)")
-                if plant.water_level < 1:
+                        f"Water level {pl.water_level} is too high (max 10)")
+                if pl.water_level < 1:
                     raise HealthError(
-                        f"{plant.name}: Water level "
-                        f"{plant.water_level} is too low (min 1)")
-                if plant.sun_hours > 12:
+                        f"Water level {pl.water_level} is too low (min 1)")
+                if pl.sun_hours > 12:
                     raise HealthError(
-                        f"{plant.name}: Sunlight hours "
-                        f"{plant.sun_hours} is too high (max 12)")
-                if plant.sun_hours < 2:
+                        f"Sunlight hours {pl.sun_hours} is too high (max 12)")
+                if pl.sun_hours < 2:
                     raise HealthError(
-                        f"{plant.name}: Sunlight hours "
-                        f"{plant.sun_hours} is too low (min 2)")
-                print(f"{plant.name}: healthy (water: "
-                      f"{plant.water_level}, sun: {plant.sun_hours})")
-        except HealthError as exc:
-            print(f"Error checking {exc}")
+                        f"Sunlight hours {pl.sun_hours} is too low (min 2)")
+                print(f"{pl.name}: healthy (water: "
+                      f"{pl.water_level}, sun: {pl.sun_hours})")
+            except HealthError as exc:
+                print(f"Error checking {pl.name}: {exc}")
 
 
 def test_garden_system():
